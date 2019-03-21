@@ -1,10 +1,23 @@
-package com.test.level.Etudiant;
+package com.test.level.entity;
 
-public class Etudiant {
+public class User {
+	private int id;
 	private int cin;
 	private String nom;
 	private String prenonom;
-	private int id;
+	
+
+	public User() {
+
+	}
+
+	public User(int id, int cin,  String nom, String prenonom) {
+		super();
+		this.id = id;
+		this.cin = cin;
+		this.nom = nom;
+		this.prenonom = prenonom;
+	}
 
 	public int getId() {
 		return id;
@@ -12,17 +25,6 @@ public class Etudiant {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Etudiant() {
-
-	}
-
-	public Etudiant(int cin, String nom, String prenonom) {
-		super();
-		this.cin = cin;
-		this.nom = nom;
-		this.prenonom = prenonom;
 	}
 
 	public int getCin() {
