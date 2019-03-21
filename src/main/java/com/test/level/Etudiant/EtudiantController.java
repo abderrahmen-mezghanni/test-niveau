@@ -30,10 +30,10 @@ public class EtudiantController {
 
 	@RequestMapping(value = "/etudiants", method = RequestMethod.POST, consumes="application/json")
 	public ResponseEntity addEtudiant(@RequestBody Etudiant etudiant) {
-		if (etudiantService.addEtudiant(etudiant) && false) {
+		if (etudiantService.addEtudiant(etudiant)) {
 			return new ResponseEntity<>(etudiant, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>("Etudiant non ajouté", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Etudiant non ajoutï¿½", HttpStatus.BAD_REQUEST);
 		}
 
 	}
