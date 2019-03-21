@@ -4,6 +4,15 @@ public class Etudiant {
 	private int cin;
 	private String nom;
 	private String prenonom;
+	private int id;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public Etudiant() {
 
