@@ -1,15 +1,15 @@
 package com.test.level.entity;
 
-public class Steam {
+public class Stream {
 	private int id;
 	private String nom;
 
-	public Steam() {
+	public Stream() {
 		super();
 
 	}
 
-	public Steam(int id, String nom) {
+	public Stream(int id, String nom) {
 		super();
 		this.id = id;
 		this.nom = nom;

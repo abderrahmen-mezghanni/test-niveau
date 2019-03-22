@@ -22,7 +22,7 @@ public class TestService {
 		return tests;
 	}
 
-	public Test getSteam(int id) {
+	public Test getTest(int id) {
 		return tests.stream().filter(e -> e.getId() == id).findFirst().get();
 
 	}

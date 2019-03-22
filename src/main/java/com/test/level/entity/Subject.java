@@ -3,15 +3,15 @@ package com.test.level.entity;
 public class Subject {
 	private int id;
 	private String nom;
-	private Steam steam ;
+	private Stream stream ;
 
 	public Subject() {
 		super();
 	}
 
-	public Subject(int id, String nom,Steam steam) {
+	public Subject(int id, String nom,Stream stream) {
 		super();
-		this.steam=steam ;
+		this.stream=stream ;
 		this.id = id;
 		this.nom = nom;
 	}
