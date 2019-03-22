@@ -32,9 +32,9 @@ public class ProfessorService {
 		return professors.add(professor);
 	}
 
-	public boolean deleteProfessor(Professor professor) {
-		// TODO implemetn delete
-		return false;
+	public boolean deleteProfessor(int id) {
+		professors.removeIf(a -> a.getId() == id);
+		return true;
 	}
 
 	public boolean addAllProfessors(List<Professor> professors) {
@@ -48,8 +48,15 @@ public class ProfessorService {
 	 * @param etudiant
 	 * @return
 	 */
-	public boolean updateProfessor(Professor professor) {
-		// TODO implement update
+	public boolean updateProfessor(int id, Professor professor) {
+		for (int i = 0; i < professors.size(); i++) {
+			Professor a = professors.get(i);
+			if (a.getId() == professor.getId()) {
+				professors.set(i, professor);
+				return true;
+			}
+
+		}
 		return false;
 	}
 

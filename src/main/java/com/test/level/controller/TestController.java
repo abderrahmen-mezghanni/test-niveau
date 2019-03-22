@@ -41,4 +41,24 @@ public class TestController {
 		}
 
 	}
+
+	@RequestMapping(value = "/tests/{id}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity updateTest(@RequestBody Test test, @PathVariable("id") int id) {
+		if (testService.updateTest(id, test)) {
+			return new ResponseEntity<>(test, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Test not updated", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(value = "/tests/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity deleteTest(@PathVariable("id") int id) {
+		if (testService.deleteTest(id)) {
+			return new ResponseEntity<>("Test deleted", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Test not deleted", HttpStatus.BAD_REQUEST);
+		}
+
+	}
 }

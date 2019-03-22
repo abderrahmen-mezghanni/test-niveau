@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.test.level.entity.Administrator;
 import com.test.level.entity.Subject;
 import com.test.level.service.SubjectService;
 
@@ -38,6 +39,26 @@ public class SubjectController {
 			return new ResponseEntity<>(subject, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Subject not added", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(value = "/subjects/{id}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity updateSubject(@RequestBody Subject subject, @PathVariable("id") int id) {
+		if (subjectService.updateSubject(id, subject)) {
+			return new ResponseEntity<>(subject, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Subject not updated", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(value = "/subjects/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity deleteSubject(@PathVariable("id") int id) {
+		if (subjectService.deleteSubject(id)) {
+			return new ResponseEntity<>("Subject deleted", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Subject not deleted", HttpStatus.BAD_REQUEST);
 		}
 
 	}

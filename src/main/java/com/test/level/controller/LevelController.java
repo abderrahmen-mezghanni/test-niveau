@@ -40,4 +40,22 @@ public class LevelController {
 		}
 
 	}
+
+	@RequestMapping(value = "/level/{id}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity updateLevel(@RequestBody Level level, @PathVariable("id") int id) {
+		if (levelService.updateLevel(id, level)) {
+			return new ResponseEntity<>(level, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Level not updated", HttpStatus.BAD_REQUEST);
+		}
+
+	}@RequestMapping(value = "/level/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity deleteLevel( @PathVariable("id") int id) {
+		if (levelService.deleteLevel(id)) {
+			return new ResponseEntity<>( "Level deleted",HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Level not deleted", HttpStatus.BAD_REQUEST);
+		}
+
+	}
 }

@@ -17,29 +17,48 @@ import com.test.level.service.AdministratorService;
 @RestController
 public class AdministratorControlleur {
 
-	public class AdministratorController {
-		@Autowired
-		private AdministratorService administratorService;
+	@Autowired
+	private AdministratorService administratorService;
 
-		@RequestMapping(value = "/administrators", method = RequestMethod.GET)
-		public List<Administrator> administratorList() {
-			return administratorService.getAllAdministrators();
-		}
-
-		@RequestMapping(value = "/administrators/{nom}", method = RequestMethod.GET)
-		public Administrator getAdministrator(@PathVariable("nom") String nom) {
-			return administratorService.getAdministrator(nom);
-
-		}
-
-		@RequestMapping(value = "/administrators", method = RequestMethod.POST, consumes = "application/json")
-		public ResponseEntity addUser(@RequestBody Administrator administrator) {
-			if (administratorService.addAdministrator(administrator)) {
-				return new ResponseEntity<>(administrator, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<>("User not added", HttpStatus.BAD_REQUEST);
-			}
-
-		}
+	@RequestMapping(value = "/administrators", method = RequestMethod.GET)
+	public List<Administrator> administratorList() {
+		return administratorService.getAllAdministrators();
 	}
+
+	@RequestMapping(value = "/administrators/{id}", method = RequestMethod.GET)
+	public Administrator getAdministrator(@PathVariable("id") int id) {
+		return administratorService.getAdministrator(id);
+
+	}
+
+	@RequestMapping(value = "/administrators", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity addAdministrator(@RequestBody Administrator administrator) {
+		if (administratorService.addAdministrator(administrator)) {
+			return new ResponseEntity<>(administrator, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Administrator not added", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(value = "/administrators/{id}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity updateAdministrator(@RequestBody Administrator administrator, @PathVariable("id") int id) {
+		if (administratorService.updateAdministrator(id, administrator)) {
+			return new ResponseEntity<>(administrator, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Administrator not updated", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(value = "/administrators/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity deleteAdministrator( @PathVariable("id") int id) {
+		if (administratorService.deleteAdministrator(id)) {
+			return new ResponseEntity<>("Administrator deleted",HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Administrator not deleted", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
 }

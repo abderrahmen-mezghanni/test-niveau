@@ -31,9 +31,9 @@ public class QuestionService {
 		return questions.add(question);
 	}
 
-	public boolean deleteQuestion(Question question) {
-		// TODO implemetn delete
-		return false;
+	public boolean deleteQuestion(int id) {
+		questions.removeIf(a ->a.getId()==id);
+		return true;
 	}
 
 	public boolean addAllQuestions(List<Question> questions) {
@@ -47,8 +47,15 @@ public class QuestionService {
 	 * @param etudiant
 	 * @return
 	 */
-	public boolean updateQuestion(Question question) {
-		// TODO implement update
+	public boolean updateQuestion(int id ,Question question) {
+		for (int i = 0; i < questions.size(); i++) {
+			Question a = questions.get(i);
+			if (a.getId() == question.getId()) {
+				questions.set(i, question);
+				return true;
+			}
+
+		}
 		return false;
 	}
 

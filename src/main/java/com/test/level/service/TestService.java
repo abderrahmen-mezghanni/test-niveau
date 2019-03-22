@@ -31,9 +31,9 @@ public class TestService {
 		return tests.add(test);
 	}
 
-	public boolean deleteTest(Test test) {
-		// TODO implemetn delete
-		return false;
+	public boolean deleteTest(int id) {
+		tests.removeIf(a ->a.getId()==id);
+		return true;
 	}
 
 	public boolean addAllTests(List<Test> tests) {
@@ -47,8 +47,15 @@ public class TestService {
 	 * @param etudiant
 	 * @return
 	 */
-	public boolean updateTest(Test test) {
-		// TODO implement update
+	public boolean updateTest(int id, Test test) {
+		for (int i = 0; i < tests.size(); i++) {
+			Test a = tests.get(i);
+			if (a.getId() == test.getId()) {
+				tests.set(i, test);
+				return true;
+			}
+
+		}
 		return false;
 	}
 

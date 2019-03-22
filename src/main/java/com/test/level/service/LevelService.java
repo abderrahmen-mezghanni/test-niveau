@@ -31,9 +31,9 @@ public class LevelService {
 		return levels.add(level);
 	}
 
-	public boolean deleteLevel(Level level) {
-		// TODO implemetn delete
-		return false;
+	public boolean deleteLevel(int id) {
+		levels.removeIf(a -> a.getId() == id);
+		return true;
 	}
 
 	public boolean addAllLevels(List<Level> levels) {
@@ -47,8 +47,15 @@ public class LevelService {
 	 * @param etudiant
 	 * @return
 	 */
-	public boolean updateSubject(Level level) {
-		// TODO implement update
+	public boolean updateLevel(int id ,Level level) {
+		for (int i = 0; i < levels.size(); i++) {
+		Level a = levels.get(i);
+			if (a.getId() == level.getId()) {
+				levels.set(i, level);
+				return true;
+			}
+
+		}
 		return false;
 	}
 

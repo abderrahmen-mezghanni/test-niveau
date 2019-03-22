@@ -40,4 +40,24 @@ public class StreamController {
 		}
 
 	}
+
+	@RequestMapping(value = "/streams/{id}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity updateStreams(@RequestBody Stream stream, @PathVariable("id") int id) {
+		if (streamService.updateStream(id, stream)) {
+			return new ResponseEntity<>(stream, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Stream not updated", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(value = "/streams/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity deleteStreams(@PathVariable("id") int id) {
+		if (streamService.deleteStream(id)) {
+			return new ResponseEntity<>("Stream deleted", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Stream not deleted", HttpStatus.BAD_REQUEST);
+		}
+
+	}
 }

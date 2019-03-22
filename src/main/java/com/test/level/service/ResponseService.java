@@ -32,9 +32,9 @@ public class ResponseService {
 			return responses.add(response);
 		}
 
-		public boolean deleteResponse(Response response) {
-			// TODO implemetn delete
-			return false;
+		public boolean deleteResponse(int id) {
+			responses.removeIf(a ->a.getId()==id);
+			return true;
 		}
 
 		public boolean addAllResponses(List<Response> responses) {
@@ -48,8 +48,15 @@ public class ResponseService {
 		 * @param etudiant
 		 * @return
 		 */
-		public boolean updateResponse(Response response) {
-			// TODO implement update
+		public boolean updateResponse(int id ,Response response) {
+			for (int i = 0; i < responses.size(); i++) {
+				Response a = responses.get(i);
+				if (a.getId() == response.getId()) {
+					responses.set(i, response);
+					return true;
+				}
+
+			}
 			return false;
 		}
 

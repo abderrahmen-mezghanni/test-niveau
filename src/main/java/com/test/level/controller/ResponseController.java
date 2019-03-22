@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.level.entity.Response;
 import com.test.level.service.ResponseService;
 
-
 @RestController
 public class ResponseController {
 
@@ -38,6 +37,24 @@ public class ResponseController {
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Response not added", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(value = "/responses/{id}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity updateResponse(@RequestBody Response response, @PathVariable("id") int id) {
+		if (responseService.updateResponse(id, response)) {
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Administrator not updated", HttpStatus.BAD_REQUEST);
+		}
+
+	}@RequestMapping(value = "/responses/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity deleteResponse( @PathVariable("id") int id) {
+		if (responseService.deleteResponse(id)) {
+			return new ResponseEntity<>("Administrator deleted",HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Administrator not deleted", HttpStatus.BAD_REQUEST);
 		}
 
 	}

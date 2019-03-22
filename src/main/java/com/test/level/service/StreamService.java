@@ -31,9 +31,9 @@ public class StreamService {
 		return streams.add(steam);
 	}
 
-	public boolean deleteStream(Stream steam) {
-		// TODO implemetn delete
-		return false;
+	public boolean deleteStream(int id) {
+		streams.removeIf(a ->a.getId()==id);
+		return true;
 	}
 
 	public boolean addAllStreams(List<Stream> steams) {
@@ -47,9 +47,15 @@ public class StreamService {
 	 * @param etudiant
 	 * @return
 	 */
-	public boolean updateStream(Stream steam) {
-		// TODO implement update
-		return false;
+	public boolean updateStream(int id ,Stream stream) {
+		for (int i = 0; i < streams.size(); i++) {
+			Stream a = streams.get(i);
+			if (a.getId() == stream.getId()) {
+				streams.set(i, stream);
+				return true;
+			}
+
+		}		return false;
 	}
 
 }

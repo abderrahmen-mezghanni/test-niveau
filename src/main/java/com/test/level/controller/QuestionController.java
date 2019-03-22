@@ -40,4 +40,24 @@ public class QuestionController {
 		}
 
 	}
+
+	@RequestMapping(value = "/questions/{id}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity updateUser(@RequestBody Question question, @PathVariable("id") int id) {
+		if (questionService.updateQuestion(id, question)) {
+			return new ResponseEntity<>(question, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("question not updated", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(value = "/questions/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity deleteUser(@PathVariable("id") int id) {
+		if (questionService.deleteQuestion(id)) {
+			return new ResponseEntity<>("question deleted", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("question not deleted", HttpStatus.BAD_REQUEST);
+		}
+
+	}
 }

@@ -32,11 +32,31 @@ public class ProfessorController {
 	}
 
 	@RequestMapping(value = "/professors", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity addUser(@RequestBody Professor professor) {
+	public ResponseEntity addProfessor(@RequestBody Professor professor) {
 		if (professorService.addProfessor(professor)) {
 			return new ResponseEntity<>(professor, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Professor not added", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(value = "/professors/{id}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity updateProfessor(@RequestBody Professor professor, @PathVariable("id") int id) {
+		if (professorService.updateProfessor(id, professor)) {
+			return new ResponseEntity<>(professor, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Professor not updated", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(value = "/professors/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity deleteProfessor(@PathVariable("id") int id) {
+		if (professorService.deleteProfessor(id)) {
+			return new ResponseEntity<>("Professor deleted", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Professor not deleted", HttpStatus.BAD_REQUEST);
 		}
 
 	}

@@ -28,13 +28,13 @@ public class StudentService {
 
 	}
 
-	public boolean addStudent(Student student ) {
-			return students.add(student);
-		}
+	public boolean addStudent(Student student) {
+		return students.add(student);
+	}
 
-	public boolean deleteStudent(Student student) {
-		// TODO implemetn delete
-		return false;
+	public boolean deleteStudent(int id) {
+		students.removeIf(a ->a.getId()==id);
+		return true;
 	}
 
 	public boolean addAllStudents(List<Student> students) {
@@ -48,8 +48,15 @@ public class StudentService {
 	 * @param etudiant
 	 * @return
 	 */
-	public boolean updateStudent(Student student) {
-		// TODO implement update
+	public boolean updateStudent(int id,Student student) {
+		for (int i = 0; i < students.size(); i++) {
+			Student a = students.get(i);
+			if (a.getId() == student.getId()) {
+				students.set(i, student);
+				return true;
+			}
+
+		}
 		return false;
 	}
 

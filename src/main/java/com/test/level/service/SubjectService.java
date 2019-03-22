@@ -15,7 +15,7 @@ public class SubjectService {
 
 	public SubjectService() {
 		super();
-		this.subjects.addAll(Arrays.asList(new Subject(055, "proba", null), new Subject(458, "recherche",null)));
+		this.subjects.addAll(Arrays.asList(new Subject(055, "proba", null), new Subject(458, "recherche", null)));
 	}
 
 	public List<Subject> getAllSubjects() {
@@ -31,9 +31,9 @@ public class SubjectService {
 		return subjects.add(subject);
 	}
 
-	public boolean deleteSubjects(Subject student) {
-		// TODO implemetn delete
-		return false;
+	public boolean deleteSubject(int id) {
+		subjects.removeIf(a ->a.getId()==id);
+		return true;
 	}
 
 	public boolean addAllSubjects(List<Subject> students) {
@@ -47,8 +47,15 @@ public class SubjectService {
 	 * @param etudiant
 	 * @return
 	 */
-	public boolean updateSubject(Subject student) {
-		// TODO implement update
+	public boolean updateSubject(int id, Subject subject) {
+		for (int i = 0; i < subjects.size(); i++) {
+			Subject a = subjects.get(i);
+			if (a.getId() == subject.getId()) {
+				subjects.set(i, subject);
+				return true;
+			}
+
+		}
 		return false;
 	}
 
