@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.test.level.entity.Level;
+import com.test.level.model.Level;
 import com.test.level.service.LevelService;
 
 @RestController

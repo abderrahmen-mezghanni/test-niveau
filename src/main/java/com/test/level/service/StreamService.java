@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.test.level.entity.Stream;
+import com.test.level.model.Stream;
 
 @Service
 public class StreamService {

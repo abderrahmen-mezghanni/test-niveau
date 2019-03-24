@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.test.level.entity.Student;
+import com.test.level.model.Student;
 
 @Service
 public class StudentService {

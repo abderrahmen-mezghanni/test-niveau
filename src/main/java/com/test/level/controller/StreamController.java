@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.test.level.entity.Stream;
+import com.test.level.model.Stream;
 import com.test.level.service.StreamService;
 
 @RestController

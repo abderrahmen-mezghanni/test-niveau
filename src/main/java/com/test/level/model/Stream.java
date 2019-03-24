@@ -1,17 +1,16 @@
-package com.test.level.entity;
+package com.test.level.model;
 
-public class Subject {
+public class Stream {
 	private int id;
 	private String nom;
-	private Stream stream ;
 
-	public Subject() {
+	public Stream() {
 		super();
+
 	}
 
-	public Subject(int id, String nom,Stream stream) {
+	public Stream(int id, String nom) {
 		super();
-		this.stream=stream ;
 		this.id = id;
 		this.nom = nom;
 	}
@@ -31,5 +30,4 @@ public class Subject {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
 }

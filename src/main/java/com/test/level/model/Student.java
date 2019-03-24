@@ -1,4 +1,4 @@
-package com.test.level.entity;
+package com.test.level.model;
 
 public class Student extends User {
 
