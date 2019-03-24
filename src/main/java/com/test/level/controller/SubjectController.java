@@ -27,9 +27,9 @@ public class SubjectController {
 		return subjectService.getAllSubjects();
 	}
 
-	@RequestMapping(value = "/subjects/{nom}", method = RequestMethod.GET)
-	public Subject getSubject(@PathVariable("nom") String nom) {
-		return subjectService.getSubject(nom);
+	@RequestMapping(value = "/subjects/{id}", method = RequestMethod.GET)
+	public Subject getSubject(@PathVariable("id") Long id) {
+		return subjectService.getSubject(id);
 
 	}
 
@@ -54,7 +54,7 @@ public class SubjectController {
 	}
 
 	@RequestMapping(value = "/subjects/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity deleteSubject(@PathVariable("id") int id) {
+	public ResponseEntity deleteSubject(@PathVariable("id") Long id) {
 		if (subjectService.deleteSubject(id)) {
 			return new ResponseEntity<>("Subject deleted", HttpStatus.OK);
 		} else {

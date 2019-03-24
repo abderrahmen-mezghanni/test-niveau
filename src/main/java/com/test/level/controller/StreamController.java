@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.level.model.Stream;
+import com.test.level.model.Stream;
 import com.test.level.service.StreamService;
 
 @RestController
@@ -26,15 +27,15 @@ public class StreamController {
 	}
 
 	@RequestMapping(value = "/streams/{id}", method = RequestMethod.GET)
-	public Stream getStream(@PathVariable("id") int id) {
+	public Stream getStream(@PathVariable("id") Long id) {
 		return streamService.getStream(id);
 
 	}
 
 	@RequestMapping(value = "/streams", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity addStream(@RequestBody Stream stream) {
-		if (streamService.addStream(stream)) {
-			return new ResponseEntity<>(stream, HttpStatus.OK);
+	public ResponseEntity addStream(@RequestBody Stream streamEntity) {
+		if (streamService.addStream(streamEntity)) {
+			return new ResponseEntity<>(streamEntity, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Stream not added", HttpStatus.BAD_REQUEST);
 		}
@@ -42,8 +43,8 @@ public class StreamController {
 	}
 
 	@RequestMapping(value = "/streams/{id}", method = RequestMethod.PUT, consumes = "application/json")
-	public ResponseEntity updateStreams(@RequestBody Stream stream, @PathVariable("id") int id) {
-		if (streamService.updateStream(id, stream)) {
+	public ResponseEntity updateStreams(@RequestBody Stream stream, @PathVariable("id") Long id) {
+		if (streamService.updateStream(id)) {
 			return new ResponseEntity<>(stream, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Stream not updated", HttpStatus.BAD_REQUEST);
@@ -52,7 +53,7 @@ public class StreamController {
 	}
 
 	@RequestMapping(value = "/streams/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity deleteStreams(@PathVariable("id") int id) {
+	public ResponseEntity deleteStream(@PathVariable("id") Long id) {
 		if (streamService.deleteStream(id)) {
 			return new ResponseEntity<>("Stream deleted", HttpStatus.OK);
 		} else {

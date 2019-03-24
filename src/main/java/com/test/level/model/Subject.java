@@ -1,28 +1,8 @@
 package com.test.level.model;
 
-public class Subject {
-	private int id;
+public class Subject extends AbstractModel {
+	private Long id;
 	private String nom;
-	private Stream stream ;
-
-	public Subject() {
-		super();
-	}
-
-	public Subject(int id, String nom,Stream stream) {
-		super();
-		this.stream=stream ;
-		this.id = id;
-		this.nom = nom;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getNom() {
 		return nom;
@@ -30,6 +10,14 @@ public class Subject {
 
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

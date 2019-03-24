@@ -1,39 +1,40 @@
 package com.test.level.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.test.level.model.Stream;
+import com.test.level.populator.StreamPopulator;
+import com.test.level.repository.StreamRepository;
 
 @Service
 public class StreamService {
 
-	private List<Stream> streams = new ArrayList<>();
-
-	public StreamService() {
-		super();
-		this.streams.addAll(Arrays.asList(new Stream(01, "GII"), new Stream(02, "GT")));
-	}
+	@Autowired
+	private StreamRepository streamRepository;
+	
+	@Autowired
+	private StreamPopulator streamPopulator;
 
 	public List<Stream> getAllStreams() {
-		return streams;
+		return streamPopulator.populateList(streamRepository.findAll());
 	}
 
-	public Stream getStream(int id) {
-		return streams.stream().filter(e -> e.getId() == id).findFirst().get();
-
+	public Stream getStream(Long id) {
+		return streamPopulator.toModel(streamRepository.getOne(id));
 	}
 
-	public boolean addStream(Stream steam) {
-		return streams.add(steam);
+	public boolean addStream(Stream stream) {
+		return streamRepository.save(streamPopulator.toEntity(stream)) != null;
 	}
 
-	public boolean deleteStream(int id) {
-		streams.removeIf(a ->a.getId()==id);
-		return true;
+	public boolean deleteStream(Long id) {
+		return streamRepository.findById(id).map(stream -> {
+			streamRepository.delete(stream);
+			return true;
+		}).orElse(false);
 	}
 
 	public boolean addAllStreams(List<Stream> steams) {
@@ -47,15 +48,16 @@ public class StreamService {
 	 * @param etudiant
 	 * @return
 	 */
-	public boolean updateStream(int id ,Stream stream) {
-		for (int i = 0; i < streams.size(); i++) {
-			Stream a = streams.get(i);
-			if (a.getId() == stream.getId()) {
-				streams.set(i, stream);
-				return true;
-			}
-
-		}		return false;
+	public boolean updateStream(Long id) {
+//		for (int i = 0; i < streams.size(); i++) {
+//			Stream a = streams.get(i);
+//			if (a.getId() == stream.getId()) {
+//				streams.set(i, stream);
+//				return true;
+//			}
+//
+//		}
+		return false;
 	}
 
 }

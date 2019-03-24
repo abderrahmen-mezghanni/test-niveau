@@ -1,39 +1,42 @@
 package com.test.level.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.test.level.model.Subject;
+import com.test.level.populator.SubjectPopulator;
+import com.test.level.repository.SubjectRepository;
 
 @Service
 public class SubjectService {
 
-	private List<Subject> subjects = new ArrayList<>();
-
-	public SubjectService() {
-		super();
-		this.subjects.addAll(Arrays.asList(new Subject(055, "proba", null), new Subject(458, "recherche", null)));
-	}
+	@Autowired
+	private SubjectRepository subjectRepository;
+	
+	@Autowired
+	private SubjectPopulator subjectPopulator;
 
 	public List<Subject> getAllSubjects() {
-		return subjects;
+		return subjectPopulator.populateList(subjectRepository.findAll());
 	}
 
-	public Subject getSubject(String nom) {
-		return subjects.stream().filter(e -> e.getNom().equals(nom)).findFirst().get();
-
+	public Subject getSubject(Long id) {
+		return subjectRepository.findById(id).map(stream -> {
+			return subjectPopulator.toModel(stream);
+		}).orElse(null);
 	}
 
 	public boolean addSubject(Subject subject) {
-		return subjects.add(subject);
+		return subjectRepository.save(subjectPopulator.toEntity(subject)) != null;
 	}
 
-	public boolean deleteSubject(int id) {
-		subjects.removeIf(a ->a.getId()==id);
-		return true;
+	public boolean deleteSubject(Long id) {
+		return subjectRepository.findById(id).map(stream -> {
+			subjectRepository.delete(stream);
+			return true;
+		}).orElse(false);
 	}
 
 	public boolean addAllSubjects(List<Subject> students) {
@@ -48,14 +51,14 @@ public class SubjectService {
 	 * @return
 	 */
 	public boolean updateSubject(int id, Subject subject) {
-		for (int i = 0; i < subjects.size(); i++) {
-			Subject a = subjects.get(i);
-			if (a.getId() == subject.getId()) {
-				subjects.set(i, subject);
-				return true;
-			}
-
-		}
+//		for (int i = 0; i < subjects.size(); i++) {
+//			Subject a = subjects.get(i);
+//			if (a.getId() == subject.getId()) {
+//				subjects.set(i, subject);
+//				return true;
+//			}
+//
+//		}
 		return false;
 	}
 
