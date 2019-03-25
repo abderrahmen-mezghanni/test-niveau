@@ -50,4 +50,15 @@ public class SubjectEntity extends AbstractEntity {
 		this.stream = stream;
 	}
 
+	public SubjectEntity() {
+		super();
+	}
+
+	public SubjectEntity(Long id, String nom, StreamEntity stream) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.stream = stream;
+	}
+
 }

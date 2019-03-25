@@ -47,8 +47,22 @@ public class StreamEntity extends AbstractEntity {
 		return subjects;
 	}
 
-	public void setSubjects(List<SubjectEntity> subjects) {
+	public void setSubjects(List<SubjectEntity> subjects) {		
+		for(SubjectEntity s : subjects){
+			s.setStream(this);
+		}
 		this.subjects = subjects;
+	}
+
+	public StreamEntity(Long id, String nom, List<SubjectEntity> subjects) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.subjects = subjects;
+	}
+
+	public StreamEntity() {
+		super();
 	}
 
 }
