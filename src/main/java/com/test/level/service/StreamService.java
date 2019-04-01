@@ -33,6 +33,7 @@ public class StreamService {
 	public boolean deleteStream(Long id) {
 		return streamRepository.findById(id).map(stream -> {
 			streamRepository.delete(stream);
+			
 			return true;
 		}).orElse(false);
 	}

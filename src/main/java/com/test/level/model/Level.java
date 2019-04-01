@@ -1,7 +1,7 @@
 package com.test.level.model;
 
-public class Level {
-	private int id;
+public class Level extends AbstractModel {
+	private Long id;
 	private String nom;
 	private Subject subject ;
 	
@@ -9,14 +9,14 @@ public class Level {
 		super();
 	
 	}
-	public Level(int id, String nom) {
+	public Level(Long id, String nom) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		
 	}
 
-	public Level(int id, String nom, Subject subject) {
+	public Level(Long id, String nom, Subject subject) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -31,11 +31,11 @@ public class Level {
 		this.subject = subject;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

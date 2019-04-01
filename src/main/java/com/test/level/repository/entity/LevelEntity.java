@@ -14,25 +14,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "subject")
-public class SubjectEntity extends AbstractEntity {
+@Entity(name = "levelEntity")
+@Table(name = "level")
+public class LevelEntity extends AbstractEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "SUBJECT_ID", unique = true, nullable = false)
+	@Column(name = "LEVEL_ID", unique = true, nullable = false)
 	private Long id;
 
-	@Column(name = "SUBJECT_NAME", unique = true, nullable = false, length = 60)
+	@Column(name = "LEVEL_NAME", unique = true, nullable = false, length = 60)
 	private String nom;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "STREAM_ID", nullable = false)
-	private StreamEntity stream;
+	@ManyToOne
+	@JoinColumn(name = "SUBJECT_ID")
+	private SubjectEntity subject;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<LevelEntity> levels;
-	
+//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "level", cascade = CascadeType.ALL, orphanRemoval = true)
+//	private List<TestEntity> Tests;
+
 	public Long getId() {
 		return id;
 	}
@@ -49,23 +49,23 @@ public class SubjectEntity extends AbstractEntity {
 		this.nom = nom;
 	}
 
-	public StreamEntity getStream() {
-		return stream;
+	public SubjectEntity getSubject() {
+		return subject;
 	}
 
-	public void setStream(StreamEntity stream) {
-		this.stream = stream;
+	public void setStream(SubjectEntity subject) {
+		this.subject = subject;
 	}
 
-	public SubjectEntity() {
+	public LevelEntity() {
 		super();
 	}
 
-	public SubjectEntity(Long id, String nom, StreamEntity stream) {
+	public LevelEntity(Long id, String nom, SubjectEntity subject) {
 		super();
 		this.id = id;
 		this.nom = nom;
-		this.stream = stream;
+		this.subject = subject;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.test.level.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.test.level.model.Administrator;
 import com.test.level.model.Subject;
+import com.test.level.repository.entity.StreamEntity;
+import com.test.level.service.StreamService;
 import com.test.level.service.SubjectService;
 
 @RestController
@@ -23,13 +26,13 @@ public class SubjectController {
 	private SubjectService subjectService;
 
 	@RequestMapping(value = "/subjects", method = RequestMethod.GET)
-	public List<Subject> SubjectList() {
-		return subjectService.getAllSubjects();
+	public List<Subject> SubjectList(@PathVariable("streamId") Long streamId) {
+		return subjectService.getSubjectsByStreamId(streamId);
 	}
 
 	@RequestMapping(value = "/subjects/{id}", method = RequestMethod.GET)
-	public Subject getSubject(@PathVariable("id") Long id) {
-		return subjectService.getSubject(id);
+	public Subject getSubject(@PathVariable("id") Long id, @PathVariable("streamId") Long streamId) {
+		return subjectService.getSubject(id, streamId);
 
 	}
 
@@ -44,7 +47,7 @@ public class SubjectController {
 	}
 
 	@RequestMapping(value = "/subjects/{id}", method = RequestMethod.PUT, consumes = "application/json")
-	public ResponseEntity updateSubject(@RequestBody Subject subject, @PathVariable("id") int id) {
+	public ResponseEntity updateSubject(@RequestBody Subject subject, @PathVariable("id") Long id) {
 		if (subjectService.updateSubject(id, subject)) {
 			return new ResponseEntity<>(subject, HttpStatus.OK);
 		} else {

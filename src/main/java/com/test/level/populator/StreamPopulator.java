@@ -17,24 +17,24 @@ public class StreamPopulator extends AbstractPopulator<StreamEntity, Stream> {
 		Stream stream = new Stream();
 		stream.setId(entity.getId());
 		stream.setNom(entity.getNom());
-		stream.setSubjects(subjectPopulator.populateList(entity.getSubjects()));
+//		stream.setSubjects(subjectPopulator.populateList(entity.getSubjects()));
 		return stream;
 	}
 
 	@Override
 	public StreamEntity toEntity(Stream model) {
-		StreamEntity stream = new StreamEntity();
-		stream.setId(model.getId());
-		stream.setNom(model.getNom());
-		stream.setSubjects(subjectPopulator.populateFrommodelList(model.getSubjects()));
-		return stream;
+		StreamEntity streamEntity = new StreamEntity();
+		streamEntity.setId(model.getId());
+		streamEntity.setNom(model.getNom());
+//		streamEntity.setSubjects(subjectPopulator.populateFrommodelList(model.getSubjects()));
+		return streamEntity;
 	}
 
 	@Override
 	public StreamEntity updateToEntity(Stream model, StreamEntity entity) {
 		entity.setId(model.getId());
 		entity.setNom(model.getNom());
-		entity.setSubjects(subjectPopulator.populateFrommodelList(model.getSubjects()));
+//		entity.setSubjects(subjectPopulator.populateFrommodelList(model.getSubjects()));
 		return entity;
 	}
 	

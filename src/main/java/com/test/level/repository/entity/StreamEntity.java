@@ -24,7 +24,9 @@ public class StreamEntity extends AbstractEntity {
 	@Column(name = "STREAM_NAME", unique = true, nullable = false, length = 60)
 	private String nom;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "stream", cascade = CascadeType.ALL, orphanRemoval = true)
+	
+//	3, cascade = CascadeType.ALL
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "stream", orphanRemoval = true)
 	private List<SubjectEntity> subjects;
 
 	public Long getId() {

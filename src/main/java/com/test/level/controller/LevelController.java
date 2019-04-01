@@ -14,20 +14,25 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.level.model.Level;
 import com.test.level.service.LevelService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value="Level", description="CRUD operation on level")
 @RestController
 public class LevelController {
 
 	@Autowired
 	private LevelService levelService;
-
+	
+	@ApiOperation(value = "View a list of available levels", response = List.class)
 	@RequestMapping(value = "/levels", method = RequestMethod.GET)
-	public List<Level> levelList() {
+	public List<Level> levelList(@PathVariable("streamId") Long streamId,@PathVariable("subjectId") Long subjectId) {
 		return levelService.getAllLevels();
 	}
-
-	@RequestMapping(value = "/levels/{nom}", method = RequestMethod.GET)
-	public Level getLevel(@PathVariable("nom") String nom) {
-		return levelService.getLevel(nom);
+	@ApiOperation(value = "Get level by id", response = Level.class)
+	@RequestMapping(value = "/levels/{id}", method = RequestMethod.GET)
+	public Level getLevel(@PathVariable("id") Long id) {
+		return levelService.getLevel(id);
 
 	}
 
@@ -42,7 +47,7 @@ public class LevelController {
 	}
 
 	@RequestMapping(value = "/level/{id}", method = RequestMethod.PUT, consumes = "application/json")
-	public ResponseEntity updateLevel(@RequestBody Level level, @PathVariable("id") int id) {
+	public ResponseEntity updateLevel(@RequestBody Level level, @PathVariable("id") Long id) {
 		if (levelService.updateLevel(id, level)) {
 			return new ResponseEntity<>(level, HttpStatus.OK);
 		} else {
@@ -50,7 +55,7 @@ public class LevelController {
 		}
 
 	}@RequestMapping(value = "/level/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity deleteLevel( @PathVariable("id") int id) {
+	public ResponseEntity deleteLevel( @PathVariable("id") Long id) {
 		if (levelService.deleteLevel(id)) {
 			return new ResponseEntity<>( "Level deleted",HttpStatus.OK);
 		} else {

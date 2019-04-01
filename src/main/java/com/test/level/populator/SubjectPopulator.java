@@ -26,6 +26,7 @@ public class SubjectPopulator extends AbstractPopulator<SubjectEntity, Subject> 
 
 	@Override
 	public SubjectEntity updateToEntity(Subject model, SubjectEntity entity) {
+		entity.setId(model.getId());
 		entity.setNom(model.getNom());
 		return entity;
 	}

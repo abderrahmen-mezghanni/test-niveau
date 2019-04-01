@@ -5,7 +5,7 @@ import java.util.List;
 public class Stream extends AbstractModel {
 	private Long id;
 	private String nom;
-	private List<Subject> subjects;
+//	private List<Subject> subjects;
 
 	public Stream() {
 		super();
@@ -20,13 +20,13 @@ public class Stream extends AbstractModel {
 		this.nom = nom;
 	}
 
-	public List<Subject> getSubjects() {
-		return subjects;
-	}
-
-	public void setSubjects(List<Subject> subjects) {
-		this.subjects = subjects;
-	}
+//	public List<Subject> getSubjects() {
+//		return subjects;
+//	}
+//
+//	public void setSubjects(List<Subject> subjects) {
+//		this.subjects = subjects;
+//	}
 
 	public Long getId() {
 		return id;
