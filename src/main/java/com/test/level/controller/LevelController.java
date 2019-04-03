@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.level.model.Level;
+import com.test.level.repository.LevelRepository;
 import com.test.level.service.LevelService;
 
 import io.swagger.annotations.Api;
@@ -25,20 +26,20 @@ public class LevelController {
 	private LevelService levelService;
 	
 	@ApiOperation(value = "View a list of available levels", response = List.class)
-	@RequestMapping(value = "/levels", method = RequestMethod.GET)
+	@RequestMapping(value = "/levels/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.GET)
 	public List<Level> levelList(@PathVariable("streamId") Long streamId,@PathVariable("subjectId") Long subjectId) {
-		return levelService.getAllLevels();
+		return levelService.findAllLevels(subjectId,streamId);
 	}
 	@ApiOperation(value = "Get level by id", response = Level.class)
-	@RequestMapping(value = "/levels/{id}", method = RequestMethod.GET)
-	public Level getLevel(@PathVariable("id") Long id) {
-		return levelService.getLevel(id);
+	@RequestMapping(value = "/levels/{id}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.GET)
+	public Level getLevel(@PathVariable("id") Long id,@PathVariable("subjectId") Long subjectId,@PathVariable("streamId") Long streamId) {
+		return levelService.findLevel( id, subjectId,streamId);
 
 	}
 
-	@RequestMapping(value = "/levels", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity addLevel(@RequestBody Level level) {
-		if (levelService.addLevel(level)) {
+	@RequestMapping(value = "/levels/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity addLevel(@RequestBody Level level,@PathVariable("streamId")Long streamId,@PathVariable("subjectId") Long subjectId) {
+		if (levelService.addLevel(level,subjectId,streamId)) {
 			return new ResponseEntity<>(level, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Level not added", HttpStatus.BAD_REQUEST);
@@ -51,8 +52,7 @@ public class LevelController {
 		if (levelService.updateLevel(id, level)) {
 			return new ResponseEntity<>(level, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>("Level not updated", HttpStatus.BAD_REQUEST);
-		}
+			return new ResponseEntity<>("Level not updated", HttpStatus.BAD_REQUEST);		}
 
 	}@RequestMapping(value = "/level/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity deleteLevel( @PathVariable("id") Long id) {

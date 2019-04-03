@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.test.level.model.Stream;
 import com.test.level.model.Subject;
 import com.test.level.populator.StreamPopulator;
 import com.test.level.populator.SubjectPopulator;
@@ -19,6 +18,9 @@ public class SubjectService {
 
 	@Autowired
 	private SubjectRepository subjectRepository;
+	
+	@Autowired
+	private StreamRepository streamRepository;
 	
 	@Autowired
 	private SubjectPopulator subjectPopulator;
@@ -47,11 +49,13 @@ public class SubjectService {
 				S = L.get(i);
 				break;
 			}
+		S.setStream(streamService.getStream(streamId));
 		return S;
 	}
 
-	public boolean addSubject(Subject subject) {
-		StreamEntity stream = streamPopulator.toEntity(streamService.getStream(subject.getStream().getId()));
+	public boolean addSubject(Subject subject, Long streamId) {
+//		StreamEntity stream = streamPopulator.toEntity(streamService.getStream(subject.getStream().getId()));
+		StreamEntity stream = streamPopulator.toEntity(streamService.getStream(streamId));
 		SubjectEntity subjectEntity = subjectPopulator.toEntity(subject);
 		subjectEntity.setStream(stream);
 		return subjectRepository.save(subjectEntity) != null;
@@ -69,16 +73,14 @@ public class SubjectService {
 	}
 
 
-	public boolean updateSubject(Long id, Subject subject) {
-//		for (int i = 0; i < subjects.size(); i++) {
-//			Subject a = subjects.get(i);
-//			if (a.getId() == subject.getId()) {
-//				subjects.set(i, subject);
-//				return true;
-//			}
-//
-//		}
-		return false;
+	public boolean updateSubject(Long id, Subject subject,Long streamId) {
+		
+		
+		SubjectEntity subjectEntity = subjectRepository.getOne(id);
+		subjectEntity.setNom(subject.getNom());
+		subjectEntity.setId(id);
+		subjectEntity.setStream(streamRepository.getOne(streamId));
+		return subjectRepository.save(subjectEntity) != null;
 	}
 
 }

@@ -26,8 +26,8 @@ public class LevelEntity extends AbstractEntity {
 	@Column(name = "LEVEL_NAME", unique = true, nullable = false, length = 60)
 	private String nom;
 
-	@ManyToOne
-	@JoinColumn(name = "SUBJECT_ID")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "SUBJECT_ID", nullable = false)
 	private SubjectEntity subject;
 	
 //	@OneToMany(fetch = FetchType.EAGER, mappedBy = "level", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -53,7 +53,7 @@ public class LevelEntity extends AbstractEntity {
 		return subject;
 	}
 
-	public void setStream(SubjectEntity subject) {
+	public void setSubject(SubjectEntity subject) {
 		this.subject = subject;
 	}
 

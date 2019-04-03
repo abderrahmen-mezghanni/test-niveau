@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.test.level.model.Stream;
 import com.test.level.populator.StreamPopulator;
 import com.test.level.repository.StreamRepository;
+import com.test.level.repository.entity.StreamEntity;
 
 @Service
 public class StreamService {
@@ -38,27 +39,12 @@ public class StreamService {
 		}).orElse(false);
 	}
 
-	public boolean addAllStreams(List<Stream> steams) {
-		// TODO implement all etudiant
-		return false;
-	}
+	public boolean updateStream(Long id,Stream stream) {
 
-	/**
-	 * Method that update student
-	 * 
-	 * @param etudiant
-	 * @return
-	 */
-	public boolean updateStream(Long id) {
-//		for (int i = 0; i < streams.size(); i++) {
-//			Stream a = streams.get(i);
-//			if (a.getId() == stream.getId()) {
-//				streams.set(i, stream);
-//				return true;
-//			}
-//
-//		}
-		return false;
+		StreamEntity streamEntity = streamRepository.getOne(id);
+		streamEntity.setNom(stream.getNom());
+		streamEntity.setId(id);
+		return streamRepository.save(streamEntity) != null;
 	}
 
 }

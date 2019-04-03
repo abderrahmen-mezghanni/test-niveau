@@ -1,6 +1,5 @@
 package com.test.level.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.test.level.model.Administrator;
+
 import com.test.level.model.Subject;
-import com.test.level.repository.entity.StreamEntity;
-import com.test.level.service.StreamService;
 import com.test.level.service.SubjectService;
 
 @RestController
@@ -25,20 +22,20 @@ public class SubjectController {
 	@Autowired
 	private SubjectService subjectService;
 
-	@RequestMapping(value = "/subjects", method = RequestMethod.GET)
+	@RequestMapping(value = "/subjects/streams/{streamId}", method = RequestMethod.GET)
 	public List<Subject> SubjectList(@PathVariable("streamId") Long streamId) {
 		return subjectService.getSubjectsByStreamId(streamId);
 	}
 
-	@RequestMapping(value = "/subjects/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/subjects/{id}/streams/{streamId}", method = RequestMethod.GET)
 	public Subject getSubject(@PathVariable("id") Long id, @PathVariable("streamId") Long streamId) {
-		return subjectService.getSubject(id, streamId);
+		return subjectService.getSubject(id,streamId);
 
 	}
 
-	@RequestMapping(value = "/subjects", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity addLevel(@RequestBody Subject subject) {
-		if (subjectService.addSubject(subject)) {
+	@RequestMapping(value = "/subjects/streams/{streamId}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity addSubject(@RequestBody Subject subject, @PathVariable("streamId") Long streamId) {
+		if (subjectService.addSubject(subject,streamId)) {
 			return new ResponseEntity<>(subject, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Subject not added", HttpStatus.BAD_REQUEST);
@@ -46,9 +43,9 @@ public class SubjectController {
 
 	}
 
-	@RequestMapping(value = "/subjects/{id}", method = RequestMethod.PUT, consumes = "application/json")
-	public ResponseEntity updateSubject(@RequestBody Subject subject, @PathVariable("id") Long id) {
-		if (subjectService.updateSubject(id, subject)) {
+	@RequestMapping(value = "/subjects/{id}/streams/{streamId}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity updateSubject(@RequestBody Subject subject, @PathVariable("id") Long id, @PathVariable("streamId") Long streamId) {
+		if (subjectService.updateSubject(id,subject,streamId)) {
 			return new ResponseEntity<>(subject, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Subject not updated", HttpStatus.BAD_REQUEST);
@@ -56,7 +53,7 @@ public class SubjectController {
 
 	}
 
-	@RequestMapping(value = "/subjects/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/subjects/{id}/streams/{streamId}", method = RequestMethod.DELETE)
 	public ResponseEntity deleteSubject(@PathVariable("id") Long id) {
 		if (subjectService.deleteSubject(id)) {
 			return new ResponseEntity<>("Subject deleted", HttpStatus.OK);

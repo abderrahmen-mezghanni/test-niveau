@@ -1,6 +1,5 @@
 package com.test.level.model;
 
-import com.test.level.controller.ProfessorController;
 
 public class Administrator extends User{
 

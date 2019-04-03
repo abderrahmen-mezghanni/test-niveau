@@ -1,7 +1,5 @@
 package com.test.level.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,8 @@ import com.test.level.model.Subject;
 import com.test.level.populator.LevelPopulator;
 import com.test.level.populator.SubjectPopulator;
 import com.test.level.repository.LevelRepository;
+import com.test.level.repository.entity.LevelEntity;
+import com.test.level.repository.entity.SubjectEntity;
 
 @Service
 public class LevelService {
@@ -26,18 +26,44 @@ public class LevelService {
 	@Autowired
 	private SubjectService subjectService;
 	
+	@Autowired
+	private SubjectPopulator subjectPopulator;
+	
 	public List<Level> getAllLevels() {
 		return levelPopulator.populateList(levelRepository.findAll());
 	}
-
+	public Level findLevel(Long id,Long subjectId,Long streamId) {
+		Level level =levelPopulator.toModel(levelRepository.findLevel( streamId, subjectId,id));
+		level.setSubject(subjectService.getSubject(subjectId,streamId));
+		return level;
+	
+	}
+	
+	
+	public List<Level> findAllLevels(Long subjectId,Long streamId) {
+		List <Level> levels = levelPopulator.populateList(levelRepository.findAllLevel( streamId, subjectId));
+//		level.setSubject(subjectService.getSubject(subjectId,streamId));
+		for (int i=0; i<levels.size();i++) {
+			Level level=levels.get(i);
+			level.setSubject(subjectService.getSubject(subjectId,streamId));
+			levels.set(i,level);
+		}
+		return levels;
+	
+	}
 	public Level getLevel(long id) {
 		return levelRepository.findById(id).map(level -> {
 			return levelPopulator.toModel(level);
 		}).orElse(null);
 	}
-	public boolean addLevel(Level level) {
+	public boolean addLevel(Level level, Long subjectId, Long streamId) {
 		
-			return levelRepository.save(levelPopulator.toEntity(level)) != null;
+		Subject subject= subjectService.getSubject(subjectId, streamId);
+		SubjectEntity subjectEntity = subjectPopulator.toEntity(subject);
+		LevelEntity levelEntity = levelPopulator.toEntity(level);
+		levelEntity.setSubject(subjectEntity);
+		
+			return levelRepository.save(levelEntity) != null;
 		
 	}
 	

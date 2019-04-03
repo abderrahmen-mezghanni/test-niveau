@@ -1,7 +1,6 @@
 package com.test.level.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +43,7 @@ public class StreamController {
 
 	@RequestMapping(value = "/streams/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity updateStreams(@RequestBody Stream stream, @PathVariable("id") Long id) {
-		if (streamService.updateStream(id)) {
+		if (streamService.updateStream(id,stream)) {
 			return new ResponseEntity<>(stream, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Stream not updated", HttpStatus.BAD_REQUEST);

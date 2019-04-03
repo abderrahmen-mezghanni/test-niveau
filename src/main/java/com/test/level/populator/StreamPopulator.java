@@ -1,6 +1,6 @@
 package com.test.level.populator;
 
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.test.level.model.Stream;
@@ -9,8 +9,8 @@ import com.test.level.repository.entity.StreamEntity;
 @Component
 public class StreamPopulator extends AbstractPopulator<StreamEntity, Stream> {
 	
-	@Autowired
-	private SubjectPopulator subjectPopulator;
+//	@Autowired
+//	private SubjectPopulator subjectPopulator;
 
 	@Override
 	public Stream toModel(StreamEntity entity) {
