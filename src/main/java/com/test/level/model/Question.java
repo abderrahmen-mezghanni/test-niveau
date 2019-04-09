@@ -1,27 +1,30 @@
 package com.test.level.model;
 
-public class Question {
-	private int id;
+import java.util.List;
+
+public class Question extends AbstractModel {
+	private Long id;
 	private String statement;
 	private Test test;
+	private List <Response> Response ;
 
 	public Question() {
 		super();
 
 	}
 
-	public Question(int id, String statement, Test test) {
+	public Question(Long id, String statement, Test test) {
 		super();
 		this.id = id;
 		this.statement = statement;
 		this.test = test;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -40,6 +43,15 @@ public class Question {
 	public void setTest(Test test) {
 		this.test = test;
 	}
+
+	public List<Response> getResponse() {
+		return Response;
+	}
+
+	public void setResponse(List<Response> response) {
+		Response = response;
+	}
+
 	
 
 }

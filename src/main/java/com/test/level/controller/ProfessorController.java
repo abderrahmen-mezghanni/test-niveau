@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.level.model.Professor;
+import com.test.level.model.User;
 import com.test.level.service.ProfessorService;
 
 @RestController
@@ -21,13 +22,13 @@ public class ProfessorController {
 	private ProfessorService professorService;
 
 	@RequestMapping(value = "/professors", method = RequestMethod.GET)
-	public List<Professor> professorList() {
+	public List<User> professorList() {
 		return professorService.getAllProfessors();
 	}
 
-	@RequestMapping(value = "/professors/{nom}", method = RequestMethod.GET)
-	public Professor getProfessorr(@PathVariable("nom") String nom) {
-		return professorService.getProfessor(nom);
+	@RequestMapping(value = "/professors/{cin}", method = RequestMethod.GET)
+	public User getAdministrator(@PathVariable("cin") Long cin) {
+		return professorService.findProfessor(cin);
 
 	}
 
@@ -41,9 +42,9 @@ public class ProfessorController {
 
 	}
 
-	@RequestMapping(value = "/professors/{id}", method = RequestMethod.PUT, consumes = "application/json")
-	public ResponseEntity updateProfessor(@RequestBody Professor professor, @PathVariable("id") int id) {
-		if (professorService.updateProfessor(id, professor)) {
+	@RequestMapping(value = "/professors/{cin}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity updateProfessor(@RequestBody Professor professor, @PathVariable("cin") Long cin) {
+		if (professorService.updateProfessor(cin, professor)) {
 			return new ResponseEntity<>(professor, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Professor not updated", HttpStatus.BAD_REQUEST);
@@ -52,8 +53,8 @@ public class ProfessorController {
 	}
 
 	@RequestMapping(value = "/professors/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity deleteProfessor(@PathVariable("id") int id) {
-		if (professorService.deleteProfessor(id)) {
+	public ResponseEntity deleteProfessor(@PathVariable("cin") Long cin) {
+		if (professorService.deleteProfessor(cin)) {
 			return new ResponseEntity<>("Professor deleted", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Professor not deleted", HttpStatus.BAD_REQUEST);

@@ -1,42 +1,48 @@
-package com.test.level.model;
+package com.test.level.repository.entity;
 
 
 import java.util.List;
 
-public class User extends AbstractModel{
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "user")
+public class UserEntity extends AbstractEntity{
+	
+	@Id
 	private Long cin;
 	private String nom;
 	private String prenom;
 	private String password;
-	private List<Role> roles;
+	@ManyToMany
+	@JoinTable(name="user_role")
+	private List<RoleEntity> roles;
+	
 
-	public User() {
-		super();
+	public UserEntity() {
+
 	}
 
 	
-	
-	public User(Long cin, String nom, String prenom, String password, List<Role> roles) {
+
+	public UserEntity(Long cin, String nom, String prenom, String password) {
 		super();
+		
 		this.cin = cin;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.password = password;
-		this.roles = roles;
+	
 	}
 
 
 
-	public User(Long cin, String nom, String prenom, String password) {
-		super();
-		this.cin = cin;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.password = password;
-	}
 
-	public Long getCin() {
+	public long getCin() {
 		return cin;
 	}
 
@@ -60,20 +66,30 @@ public class User extends AbstractModel{
 		this.prenom = prenom;
 	}
 
+
+
 	public String getPassword() {
 		return password;
 	}
+
+
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public List<Role> getRoles() {
+
+
+	public List<RoleEntity> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+
+
+	public void setRoles(List<RoleEntity> roles) {
 		this.roles = roles;
 	}
+
+
 
 }

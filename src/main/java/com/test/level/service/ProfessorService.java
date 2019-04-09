@@ -4,59 +4,51 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.test.level.model.Administrator;
 import com.test.level.model.Professor;
+import com.test.level.model.User;
+import com.test.level.populator.UserPopulator;
+import com.test.level.repository.UserRepository;
+import com.test.level.repository.entity.AdministratorEntity;
+import com.test.level.repository.entity.ProfessorEntity;
 
 @Service
 public class ProfessorService {
 
-	private List<Professor> professors = new ArrayList<>();
+	@Autowired
+	private UserRepository userRepository;
 
-	public ProfessorService() {
-		super();
-		this.professors.addAll(Arrays.asList(new Professor(055, 55, "mahamed", "salah"),
-				new Professor(458, 55, "salah", "mohamed"), new Professor(420, 47, "salah", "salah55")));
+	@Autowired
+	private UserPopulator userPopulator;
+
+	public List<User> getAllProfessors() {
+		return userPopulator.populateList(userRepository.findAllProfessors());
 	}
 
-	public List<Professor> getAllProfessors() {
-		return professors;
-	}
-
-	public Professor getProfessor(String nom) {
-		return professors.stream().filter(e -> e.getNom().equals(nom)).findFirst().get();
+	public Professor findProfessor(Long professorCin) {
+		Professor professor = (Professor) userPopulator
+				.toModel(userRepository.findProfessor(professorCin));
+		return professor;
 
 	}
 
 	public boolean addProfessor(Professor professor) {
-		return professors.add(professor);
+		ProfessorEntity professorEntity = (ProfessorEntity) userPopulator.toEntity(professor);
+		return userRepository.save(professorEntity) != null;
 	}
 
-	public boolean deleteProfessor(int id) {
-		professors.removeIf(a -> a.getId() == id);
-		return true;
+	public boolean deleteProfessor(Long professorCin) {
+		return userRepository.findById(professorCin).map(professor -> {
+			userRepository.delete(professor);
+			return true;
+		}).orElse(false);
 	}
+	
+	public boolean updateProfessor(long professorCin ,Professor professor) {
 
-	public boolean addAllProfessors(List<Professor> professors) {
-		// TODO implement all etudiant
-		return false;
-	}
-
-	/**
-	 * Method that update student
-	 * 
-	 * @param etudiant
-	 * @return
-	 */
-	public boolean updateProfessor(int id, Professor professor) {
-		for (int i = 0; i < professors.size(); i++) {
-			Professor a = professors.get(i);
-			if (a.getId() == professor.getId()) {
-				professors.set(i, professor);
-				return true;
-			}
-
-		}
 		return false;
 	}
 

@@ -4,59 +4,51 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.test.level.model.Administrator;
 import com.test.level.model.Student;
+import com.test.level.model.User;
+import com.test.level.populator.UserPopulator;
+import com.test.level.repository.UserRepository;
+import com.test.level.repository.entity.AdministratorEntity;
+import com.test.level.repository.entity.StudentEntity;
 
 @Service
 public class StudentService {
 
-	private List<Student> students = new ArrayList<>();
+	@Autowired
+	private UserRepository userRepository;
 
-	public StudentService() {
-		super();
-		this.students.addAll(Arrays.asList(new Student(055, 55, "mahamed", "salah"),
-				new Student(458, 55, "salah", "mohamed"), new Student(420, 47, "salah", "salah55")));
+	@Autowired
+	private UserPopulator userPopulator;
+
+	public List<User> getAllStudents() {
+		return userPopulator.populateList(userRepository.findAllStudents());
 	}
 
-	public List<Student> getAllStudents() {
-		return students;
-	}
-
-	public Student getStudent(String nom) {
-		return students.stream().filter(e -> e.getNom().equals(nom)).findFirst().get();
+	public Student findStudent(Long studentCin) {
+		Student student = (Student) userPopulator
+				.toModel(userRepository.findStudent(studentCin));
+		return student;
 
 	}
 
 	public boolean addStudent(Student student) {
-		return students.add(student);
+		StudentEntity studentEntity = (StudentEntity) userPopulator.toEntity(student);
+		return userRepository.save(studentEntity) != null;
 	}
 
-	public boolean deleteStudent(int id) {
-		students.removeIf(a ->a.getId()==id);
-		return true;
+	public boolean deleteStudent(Long studentCin) {
+		return userRepository.findById(studentCin).map(student -> {
+			userRepository.delete(student);
+			return true;
+		}).orElse(false);
 	}
+	
+	public boolean updateStudent(long cin ,Student student) {
 
-	public boolean addAllStudents(List<Student> students) {
-		// TODO implement all etudiant
-		return false;
-	}
-
-	/**
-	 * Method that update student
-	 * 
-	 * @param etudiant
-	 * @return
-	 */
-	public boolean updateStudent(int id,Student student) {
-		for (int i = 0; i < students.size(); i++) {
-			Student a = students.get(i);
-			if (a.getId() == student.getId()) {
-				students.set(i, student);
-				return true;
-			}
-
-		}
 		return false;
 	}
 

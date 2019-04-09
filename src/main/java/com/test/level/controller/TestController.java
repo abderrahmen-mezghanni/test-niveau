@@ -21,20 +21,23 @@ public class TestController {
 	@Autowired
 	private TestService testService;
 
-	@RequestMapping(value = "/tests", method = RequestMethod.GET)
-	public List<Test> testList() {
-		return testService.getAllTests();
+	@RequestMapping(value = "/tests/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.GET)
+	public List<Test> testList(@PathVariable("levelId") Long levelId, @PathVariable("subjectId") Long subjectId,
+			@PathVariable("streamId") Long streamId) {
+		return testService.findAllTests(levelId, subjectId, streamId);
 	}
 
-	@RequestMapping(value = "/tests/{id}", method = RequestMethod.GET)
-	public Test getSubject(@PathVariable("id") int id) {
-		return testService.getTest(id);
+	@RequestMapping(value = "/tests/{id}/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.GET)
+	public Test getTest(@PathVariable("levelId") Long levelId, @PathVariable("subjectId") Long subjectId,
+			@PathVariable("streamId") Long streamId, @PathVariable("id") Long id) {
+		return testService.findTest(id, streamId, streamId, streamId);
 
 	}
 
-	@RequestMapping(value = "/tests", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity addLevel(@RequestBody Test test) {
-		if (testService.addTest(test)) {
+	@RequestMapping(value = "/tests/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity addLevel(@RequestBody Test test, @PathVariable("levelId") Long levelId,
+			@PathVariable("subjectId") Long subjectId, @PathVariable("streamId") Long streamId) {
+		if (testService.addTest(test, levelId, subjectId, streamId)) {
 			return new ResponseEntity<>(test, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Subject not added", HttpStatus.BAD_REQUEST);
@@ -42,8 +45,10 @@ public class TestController {
 
 	}
 
-	@RequestMapping(value = "/tests/{id}", method = RequestMethod.PUT, consumes = "application/json")
-	public ResponseEntity updateTest(@RequestBody Test test, @PathVariable("id") int id) {
+	@RequestMapping(value = "/tests/{id}/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity updateTest(@RequestBody Test test, @PathVariable("id") Long id,
+			@PathVariable("levelId") Long levelId, @PathVariable("subjectId") Long subjectId,
+			@PathVariable("streamId") Long streamId) {
 		if (testService.updateTest(id, test)) {
 			return new ResponseEntity<>(test, HttpStatus.OK);
 		} else {
@@ -52,8 +57,8 @@ public class TestController {
 
 	}
 
-	@RequestMapping(value = "/tests/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity deleteTest(@PathVariable("id") int id) {
+	@RequestMapping(value = "/tests/{id}/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.DELETE)
+	public ResponseEntity deleteTest(@PathVariable("id") Long id) {
 		if (testService.deleteTest(id)) {
 			return new ResponseEntity<>("Test deleted", HttpStatus.OK);
 		} else {

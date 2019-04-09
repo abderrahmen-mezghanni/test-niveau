@@ -20,20 +20,20 @@ public class ResponseController {
 	@Autowired
 	private ResponseService responseService;
 
-	@RequestMapping(value = "/responses", method = RequestMethod.GET)
-	public List<Response> responseList() {
-		return responseService.getAllResponses();
+	@RequestMapping(value = "/responses/questions/{questionId}/tests/{testId}/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.GET)
+	public List<Response> responseList(@PathVariable("questionId") Long questionId,@PathVariable("testId") Long testId,@PathVariable("levelId") Long levelId,@PathVariable("subjectId") Long subjectId,@PathVariable("streamId") Long streamId) {
+		return responseService.findAllResponses(questionId, testId, levelId, subjectId, streamId);
 	}
 
-	@RequestMapping(value = "/responses/{id}", method = RequestMethod.GET)
-	public Response getResponse(@PathVariable("id") int id) {
-		return responseService.getResponse(id);
+	@RequestMapping(value = "/responses/{id}/questions/{questionId}/tests/{testId}/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.GET)
+	public Response getResponse(@PathVariable("id") Long id,@PathVariable("questionId") Long questionId,@PathVariable("testId") Long testId,@PathVariable("levelId") Long levelId,@PathVariable("subjectId") Long subjectId,@PathVariable("streamId") Long streamId) {
+		return responseService.findResponse(id, questionId, testId, levelId, subjectId, streamId);
 
 	}
 
-	@RequestMapping(value = "/responses", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity addResponse(@RequestBody Response response) {
-		if (responseService.addResponse(response)) {
+	@RequestMapping(value = "/responses/questions/{questionId}/tests/{testId}/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity addResponse(@RequestBody Response response,@PathVariable("questionId") Long questionId,@PathVariable("testId") Long testId,@PathVariable("levelId") Long levelId,@PathVariable("subjectId") Long subjectId,@PathVariable("streamId") Long streamId) {
+		if (responseService.addResponse(response, questionId, testId, levelId, subjectId, streamId)) {
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Response not added", HttpStatus.BAD_REQUEST);
@@ -41,20 +41,20 @@ public class ResponseController {
 
 	}
 
-	@RequestMapping(value = "/responses/{id}", method = RequestMethod.PUT, consumes = "application/json")
-	public ResponseEntity updateResponse(@RequestBody Response response, @PathVariable("id") int id) {
+	@RequestMapping(value = "/responses/{id}/questions/{questionId}/tests/{testId}/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity updateResponse(@RequestBody Response response, @PathVariable("id") Long id) {
 		if (responseService.updateResponse(id, response)) {
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>("Administrator not updated", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Response not updated", HttpStatus.BAD_REQUEST);
 		}
 
-	}@RequestMapping(value = "/responses/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity deleteResponse( @PathVariable("id") int id) {
+	}@RequestMapping(value = "/responses/{id}/questions/{questionId}/tests/{testId}/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.DELETE)
+	public ResponseEntity deleteResponse( @PathVariable("id") Long id) {
 		if (responseService.deleteResponse(id)) {
-			return new ResponseEntity<>("Administrator deleted",HttpStatus.OK);
+			return new ResponseEntity<>("Response deleted",HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>("Administrator not deleted", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Response not deleted", HttpStatus.BAD_REQUEST);
 		}
 
 	}

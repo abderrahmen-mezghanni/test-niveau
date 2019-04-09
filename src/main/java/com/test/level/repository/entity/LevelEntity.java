@@ -1,5 +1,6 @@
 package com.test.level.repository.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity(name = "levelEntity")
+@Entity
 @Table(name = "level")
 public class LevelEntity extends AbstractEntity {
 
@@ -30,9 +31,9 @@ public class LevelEntity extends AbstractEntity {
 	@JoinColumn(name = "SUBJECT_ID", nullable = false)
 	private SubjectEntity subject;
 	
-//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "level", cascade = CascadeType.ALL, orphanRemoval = true)
-//	private List<TestEntity> Tests;
-
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "level", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<TestEntity> tests;
+	
 	public Long getId() {
 		return id;
 	}
@@ -66,6 +67,14 @@ public class LevelEntity extends AbstractEntity {
 		this.id = id;
 		this.nom = nom;
 		this.subject = subject;
+	}
+
+	public List<TestEntity> getTests() {
+		return tests;
+	}
+
+	public void setTests(List<TestEntity> tests) {
+		this.tests = tests;
 	}
 
 }

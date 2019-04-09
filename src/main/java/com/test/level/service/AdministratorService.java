@@ -3,63 +3,52 @@ package com.test.level.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.test.level.model.Administrator;
+import com.test.level.model.Level;
+import com.test.level.model.Subject;
+import com.test.level.model.User;
+import com.test.level.populator.UserPopulator;
+import com.test.level.repository.UserRepository;
+import com.test.level.repository.entity.AdministratorEntity;
+
 
 @Service
 public class AdministratorService {
 
-	private List<Administrator> administrators = new ArrayList<>();
+	@Autowired
+	private UserRepository userRepository;
 
-	public AdministratorService() {
-		super();
-		this.administrators.addAll(Arrays.asList(new Administrator(055, 55, "mahamed", "salah"),
-				new Administrator(458, 55, "salah", "mohamed"), new Administrator(420, 47, "salah", "salah55")));
+	@Autowired
+	private UserPopulator userPopulator;
+
+	public List<User> getAllAdministrtors() {
+		return userPopulator.populateList(userRepository.findAllAdministrators());
 	}
 
-	public List<Administrator> getAllAdministrators() {
-		return administrators;
-	}
-
-	public Administrator getAdministrator(int id) {
-		return administrators.stream().filter(e -> e.getId() == id).findFirst().get();
+	public Administrator findAdministrator(Long administratorId) {
+		Administrator administrator = (Administrator) userPopulator
+				.toModel(userRepository.findAdministrator(administratorId));
+		return administrator;
 
 	}
 
 	public boolean addAdministrator(Administrator administrator) {
-		return administrators.add(administrator);
+		AdministratorEntity administratorEntity = (AdministratorEntity) userPopulator.toEntity(administrator);
+		return userRepository.save(administratorEntity) != null;
 	}
 
-	public boolean deleteAdministrator(int id) {
-
-		administrators.removeIf(a -> a.getId() == id);
-		return true;
+	public boolean deleteAdministrator(Long administratorId) {
+		return userRepository.findById(administratorId).map(administrator -> {
+			userRepository.delete(administrator);
+			return true;
+		}).orElse(false);
 	}
+	
+	public boolean updateAdministrator(long id ,Administrator administrator) {
 
-	public boolean addAllAdministrators(List<Administrator> administrators) {
-		// TODO implement all etudiant
 		return false;
-	}
-
-	/**
-	 * Method that update student
-	 * 
-	 * @param etudiant
-	 * @return
-	 */
-	public boolean updateAdministrator(int id, Administrator administrator) {
-		for (int i = 0; i < administrators.size(); i++) {
-			Administrator a = administrators.get(i);
-			if (a.getId() == administrator.getId()) {
-				administrators.set(i, administrator);
-				return true;
-			}
-
-		}
-		return false;
-
 	}
 
 }

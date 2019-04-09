@@ -1,5 +1,7 @@
 package com.test.level.model;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class Professor extends User {
 
@@ -8,9 +10,12 @@ public class Professor extends User {
 
 	}
 
-	public Professor(int id, int cin, String nom, String prenonom) {
-		super(id, cin, nom, prenonom);
-	
+	public Professor(Long cin, String nom, String prenom, String password) {
+		super(cin, nom, prenom, password);
+		
+		List<Role> roles= new ArrayList<Role>();
+		roles.add(new Role("PROF","PROF"));
+		this.setRoles(roles);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.test.level.repository.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,7 +26,7 @@ public class StreamEntity extends AbstractEntity {
 
 	
 //	3, cascade = CascadeType.ALL
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "stream", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "stream", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<SubjectEntity> subjects;
 
 	public Long getId() {

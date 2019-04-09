@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.level.model.Administrator;
+import com.test.level.model.User;
 import com.test.level.service.AdministratorService;
 
 @RestController
@@ -21,13 +22,13 @@ public class AdministratorControlleur {
 	private AdministratorService administratorService;
 
 	@RequestMapping(value = "/administrators", method = RequestMethod.GET)
-	public List<Administrator> administratorList() {
-		return administratorService.getAllAdministrators();
+	public List<User> administratorList() {
+		return administratorService.getAllAdministrtors();
 	}
 
-	@RequestMapping(value = "/administrators/{id}", method = RequestMethod.GET)
-	public Administrator getAdministrator(@PathVariable("id") int id) {
-		return administratorService.getAdministrator(id);
+	@RequestMapping(value = "/administrators/{cin}", method = RequestMethod.GET)
+	public User getAdministrator(@PathVariable("cin") Long cin) {
+		return administratorService.findAdministrator(cin);
 
 	}
 
@@ -41,9 +42,9 @@ public class AdministratorControlleur {
 
 	}
 
-	@RequestMapping(value = "/administrators/{id}", method = RequestMethod.PUT, consumes = "application/json")
-	public ResponseEntity updateAdministrator(@RequestBody Administrator administrator, @PathVariable("id") int id) {
-		if (administratorService.updateAdministrator(id, administrator)) {
+	@RequestMapping(value = "/administrators/{cin}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity updateAdministrator(@RequestBody Administrator administrator, @PathVariable("cin") Long cin) {
+		if (administratorService.updateAdministrator(cin, administrator)) {
 			return new ResponseEntity<>(administrator, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Administrator not updated", HttpStatus.BAD_REQUEST);
@@ -51,9 +52,9 @@ public class AdministratorControlleur {
 
 	}
 
-	@RequestMapping(value = "/administrators/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity deleteAdministrator( @PathVariable("id") int id) {
-		if (administratorService.deleteAdministrator(id)) {
+	@RequestMapping(value = "/administrators/{cin}", method = RequestMethod.DELETE)
+	public ResponseEntity deleteAdministrator( @PathVariable("cin") Long cin) {
+		if (administratorService.deleteAdministrator(cin)) {
 			return new ResponseEntity<>("Administrator deleted",HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Administrator not deleted", HttpStatus.BAD_REQUEST);

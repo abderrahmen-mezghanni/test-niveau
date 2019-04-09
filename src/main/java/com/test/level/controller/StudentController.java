@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.test.level.model.Administrator;
 import com.test.level.model.Student;
+import com.test.level.model.User;
 import com.test.level.service.StudentService;
 
 @RestController
@@ -21,13 +22,13 @@ public class StudentController {
 	private StudentService studentService;
 
 	@RequestMapping(value = "/students", method = RequestMethod.GET)
-	public List<Student> studentList() {
+	public List<User> studentList() {
 		return studentService.getAllStudents();
 	}
 
-	@RequestMapping(value = "/students/{nom}", method = RequestMethod.GET)
-	public Student getStudent(@PathVariable("nom") String nom) {
-		return studentService.getStudent(nom);
+	@RequestMapping(value = "/students/{cin}", method = RequestMethod.GET)
+	public User getStudent(@PathVariable("cin") Long cin) {
+			return studentService.findStudent(cin);
 
 	}
 
@@ -41,9 +42,9 @@ public class StudentController {
 
 	}
 
-	@RequestMapping(value = "/students/{id}", method = RequestMethod.PUT, consumes = "application/json")
-	public ResponseEntity updateStudent(@RequestBody Student student, @PathVariable("id") int id) {
-		if (studentService.updateStudent(id, student)) {
+	@RequestMapping(value = "/students/{cin}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity updateStudent(@RequestBody Student student, @PathVariable("cin") int cin) {
+		if (studentService.updateStudent(cin, student)) {
 			return new ResponseEntity<>(student, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Student not updated", HttpStatus.BAD_REQUEST);
@@ -51,9 +52,9 @@ public class StudentController {
 
 	}
 
-	@RequestMapping(value = "/students/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity deleteStudent(@PathVariable("id") int id) {
-		if (studentService.deleteStudent(id)) {
+	@RequestMapping(value = "/students/{cin}", method = RequestMethod.DELETE)
+	public ResponseEntity deleteStudent(@PathVariable("cin") Long cin) {
+		if (studentService.deleteStudent(cin)) {
 			return new ResponseEntity<>("Student deleted", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Student not deleted", HttpStatus.BAD_REQUEST);

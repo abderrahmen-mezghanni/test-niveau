@@ -20,20 +20,20 @@ public class QuestionController {
 	@Autowired
 	private QuestionService questionService;
 
-	@RequestMapping(value = "/questions", method = RequestMethod.GET)
-	public List<Question> questionList() {
-		return questionService.getAllQuestions();
+	@RequestMapping(value = "/questions/tests/{testId}/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.GET)
+	public List<Question> questionList(@PathVariable("testId") Long testId,@PathVariable("levelId") Long levelId,@PathVariable("subjectId") Long subjectId,@PathVariable("streamId") Long streamId) {
+		return questionService.findAllQuestions(testId, levelId, subjectId, streamId);
 	}
 
-	@RequestMapping(value = "/questions/{id}", method = RequestMethod.GET)
-	public Question getQuestion(@PathVariable("id") int id) {
-		return questionService.getQuestion(id);
+	@RequestMapping(value = "/questions/{id}/tests/{testId}/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.GET)
+	public Question getQuestion(@PathVariable("id") Long id,@PathVariable("testId") Long testId,@PathVariable("levelId") Long levelId,@PathVariable("subjectId") Long subjectId,@PathVariable("streamId") Long streamId ) {
+		return questionService.findQuestion(id, testId, levelId, subjectId, streamId);
 
 	}
 
-	@RequestMapping(value = "/questions", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity addQuestion(@RequestBody Question question) {
-		if (questionService.addQuestion(question)) {
+	@RequestMapping(value = "/questions/tests/{testId}/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity addQuestion(@RequestBody Question question,@PathVariable("testId") Long testId,@PathVariable("levelId") Long levelId,@PathVariable("subjectId") Long subjectId,@PathVariable("streamId") Long streamId) {
+		if (questionService.addQuestion(question, testId, levelId, subjectId, streamId)) {
 			return new ResponseEntity<>(question, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Question not added", HttpStatus.BAD_REQUEST);
@@ -41,7 +41,7 @@ public class QuestionController {
 
 	}
 
-	@RequestMapping(value = "/questions/{id}", method = RequestMethod.PUT, consumes = "application/json")
+	@RequestMapping(value = "/questions/{id}/tests/{testId}/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity updateUser(@RequestBody Question question, @PathVariable("id") int id) {
 		if (questionService.updateQuestion(id, question)) {
 			return new ResponseEntity<>(question, HttpStatus.OK);
@@ -51,8 +51,8 @@ public class QuestionController {
 
 	}
 
-	@RequestMapping(value = "/questions/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity deleteUser(@PathVariable("id") int id) {
+	@RequestMapping(value = "/questions/{id}/tests/{testId}/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.DELETE)
+	public ResponseEntity deleteUser(@PathVariable("id") Long id) {
 		if (questionService.deleteQuestion(id)) {
 			return new ResponseEntity<>("question deleted", HttpStatus.OK);
 		} else {

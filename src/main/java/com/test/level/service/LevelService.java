@@ -81,21 +81,14 @@ public class LevelService {
 		return L;
 	}
 	public boolean deleteLevel(Long id) {
-		return levelRepository.findById(id).map(stream -> {
-			levelRepository.delete(stream);
+		return levelRepository.findById(id).map(level -> {
+			levelRepository.delete(level);
 			return true;
 		}).orElse(false);
 	}
 
 	public boolean updateLevel(long id ,Level level) {
-//		for (int i = 0; i < levels.size(); i++) {
-//		Level a = levels.get(i);
-//			if (a.getId() == level.getId()) {
-//				levels.set(i, level);
-//				return true;
-//			}
-//
-//		}
+
 		return false;
 	}
 
