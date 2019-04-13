@@ -17,7 +17,7 @@ public class AdministratorEntity extends UserEntity {
 		List<RoleEntity> roles= new ArrayList<RoleEntity>();
 		roles.add(new RoleEntity("ADMIN","ADMIN"));
 		roles.add(new RoleEntity("PROF","PROF"));
-		this.setRoles(roles);
+		this.setRole(roles);
 	}
 	
 }

@@ -14,6 +14,7 @@ import com.test.level.populator.UserPopulator;
 import com.test.level.repository.UserRepository;
 import com.test.level.repository.entity.AdministratorEntity;
 import com.test.level.repository.entity.StudentEntity;
+import com.test.level.repository.entity.UserEntity;
 
 @Service
 public class StudentService {
@@ -36,8 +37,8 @@ public class StudentService {
 	}
 
 	public boolean addStudent(Student student) {
-		StudentEntity studentEntity = (StudentEntity) userPopulator.toEntity(student);
-		return userRepository.save(studentEntity) != null;
+		UserEntity userEntity =userPopulator.toEntity(student);
+		return userRepository.save(userEntity) != null;
 	}
 
 	public boolean deleteStudent(Long studentCin) {

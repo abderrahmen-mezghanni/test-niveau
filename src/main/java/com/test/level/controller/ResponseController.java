@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,8 @@ import com.test.level.model.Response;
 import com.test.level.service.ResponseService;
 
 @RestController
+//allow the access from other servers
+@CrossOrigin ("*") 
 public class ResponseController {
 
 	@Autowired
@@ -27,7 +30,7 @@ public class ResponseController {
 
 	@RequestMapping(value = "/responses/{id}/questions/{questionId}/tests/{testId}/levels/{levelId}/subjects/{subjectId}/streams/{streamId}", method = RequestMethod.GET)
 	public Response getResponse(@PathVariable("id") Long id,@PathVariable("questionId") Long questionId,@PathVariable("testId") Long testId,@PathVariable("levelId") Long levelId,@PathVariable("subjectId") Long subjectId,@PathVariable("streamId") Long streamId) {
-		return responseService.findResponse(id, questionId, testId, levelId, subjectId, streamId);
+		return responseService.findResponse(questionId, testId, levelId, subjectId, streamId,id);
 
 	}
 

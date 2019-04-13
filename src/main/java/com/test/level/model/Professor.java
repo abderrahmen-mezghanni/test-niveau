@@ -7,6 +7,9 @@ public class Professor extends User {
 
 	public Professor() {
 		super();
+		List<Role> roles= new ArrayList<Role>();
+		roles.add(new Role("PROF","PROF"));
+		this.setRole(roles);
 
 	}
 
@@ -15,7 +18,7 @@ public class Professor extends User {
 		
 		List<Role> roles= new ArrayList<Role>();
 		roles.add(new Role("PROF","PROF"));
-		this.setRoles(roles);
+		this.setRole(roles);
 	}
 
 }

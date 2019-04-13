@@ -9,7 +9,7 @@ public class User extends AbstractModel{
 	private String nom;
 	private String prenom;
 	private String password;
-	private List<Role> roles;
+	private List<Role> role;
 
 	public User() {
 		super();
@@ -17,13 +17,13 @@ public class User extends AbstractModel{
 
 	
 	
-	public User(Long cin, String nom, String prenom, String password, List<Role> roles) {
+	public User(Long cin, String nom, String prenom, String password, List<Role> role) {
 		super();
 		this.cin = cin;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.password = password;
-		this.roles = roles;
+		this.role = role;
 	}
 
 
@@ -68,12 +68,18 @@ public class User extends AbstractModel{
 		this.password = password;
 	}
 
-	public List<Role> getRoles() {
-		return roles;
+
+
+	public List<Role> getRole() {
+		return role;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+
+
+	public void setRole(List<Role> role) {
+		this.role = role;
 	}
+
+	
 
 }

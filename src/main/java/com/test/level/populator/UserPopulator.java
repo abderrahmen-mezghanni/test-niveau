@@ -18,8 +18,7 @@ public class UserPopulator extends AbstractPopulator<UserEntity, User> {
 			user.setNom(entity.getNom());
 			user.setPrenom(entity.getPrenom());
 			user.setPassword(entity.getPassword());
-			
-			user.setRoles(rolePopulator.populateList(entity.getRoles()));
+			user.setRole(rolePopulator.populateList(entity.getRole()));
 			return user;
 		}
 
@@ -30,7 +29,7 @@ public class UserPopulator extends AbstractPopulator<UserEntity, User> {
 			user.setNom(model.getNom());
 			user.setPrenom(model.getPrenom());
 			user.setPassword(model.getPassword());
-			user.setRoles(rolePopulator.populateFrommodelList(model.getRoles()));
+			user.setRole(rolePopulator.populateFrommodelList(model.getRole()));
 			return user;
 		}
 
@@ -40,7 +39,7 @@ public class UserPopulator extends AbstractPopulator<UserEntity, User> {
 			entity.setNom(model.getNom());
 			entity.setPrenom(model.getPrenom());
 			entity.setPassword(model.getPassword());
-			entity.setRoles(rolePopulator.populateFrommodelList(model.getRoles()));
+			entity.setRole(rolePopulator.populateFrommodelList(model.getRole()));
 			return entity;
 		}
 

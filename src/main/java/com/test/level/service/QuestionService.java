@@ -9,14 +9,17 @@ import org.springframework.stereotype.Service;
 
 import com.test.level.model.Level;
 import com.test.level.model.Question;
+import com.test.level.model.Response;
 import com.test.level.model.Test;
 import com.test.level.populator.LevelPopulator;
 import com.test.level.populator.QuestionPopulator;
+import com.test.level.populator.ResponsePopulator;
 import com.test.level.populator.TestPopulator;
 import com.test.level.repository.QuestionRepository;
 import com.test.level.repository.TestRepository;
 import com.test.level.repository.entity.LevelEntity;
 import com.test.level.repository.entity.QuestionEntity;
+import com.test.level.repository.entity.ResponseEntity;
 import com.test.level.repository.entity.TestEntity;
 
 @Service
@@ -27,6 +30,12 @@ public class QuestionService {
 	
 	@Autowired
 	private QuestionPopulator questionPopulator;
+
+	@Autowired
+	private ResponsePopulator responsePopulator;
+	
+	@Autowired
+	private ResponseService responseService;
 	
 	@Autowired
 	private TestService testService;
@@ -39,7 +48,8 @@ public class QuestionService {
 	}
 	public Question findQuestion(Long id,Long testId,Long levelId,Long subjectId,Long streamId) {
 		Question question =questionPopulator.toModel(questionRepository.findQuestion( testId,levelId,subjectId,streamId,id));
-		question.setTest(testService.findTest(levelId,subjectId,streamId,testId));
+		question.setTest(testService.findTest(testId,levelId,subjectId,streamId));
+		question.setResponse(responseService.findAllResponses(id, testId, levelId, subjectId, streamId));
 		return question;
 	
 	}
@@ -49,7 +59,7 @@ public class QuestionService {
 		List <Question> questions = questionPopulator.populateList(questionRepository.findAllQuestion(testId,levelId,subjectId,streamId ));
 		for (int i=0; i<questions.size();i++) {
 			Question question=questions.get(i);
-			question.setTest(testService.findTest(levelId,subjectId,streamId,testId));
+			question.setTest(testService.findTest(testId,levelId,subjectId,streamId));
 			questions.set(i,question);
 		}
 		return questions;
@@ -62,10 +72,20 @@ public class QuestionService {
 	}
 	public boolean addQuestion(Question question,Long testId,Long levelId, Long subjectId, Long streamId) {
 		
-		Test test= testService.findTest(levelId,subjectId, streamId,testId);
+		Test test= testService.findTest(testId,levelId,subjectId, streamId);
 		TestEntity testEntity = testPopulator.toEntity(test);
+		List<Response> responses= question.getResponse();
+		List<ResponseEntity> listResponses = responsePopulator.populateFrommodelList(responses);
 		QuestionEntity questionEntity = questionPopulator.toEntity(question);
 		questionEntity.setTest(testEntity);
+		ResponseEntity response= new ResponseEntity();
+		for (int i=0;i<listResponses.size();i++) {
+			response=listResponses.get(i);
+			response.setQuestion(questionEntity);
+			listResponses.set( i, response);
+		}
+		
+		questionEntity.setResponse(listResponses);
 		
 			return questionRepository.save(questionEntity) != null;
 		

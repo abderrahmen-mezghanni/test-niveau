@@ -14,12 +14,12 @@ public interface ResponseRepository extends JpaRepository<ResponseEntity, Long>{
 //List<ResponseEntity> findByQuestionId(Long questionId);
 	
 	
-	@Query(value = "SELECT * FROM level l inner join subject sb on l.SUBJECT_ID = sb.SUBJECT_ID inner join stream st on sb.STREAM_ID = st.STREAM_ID and sb.STREAM_ID=?1 WHERE l.SUBJECT_ID =?2 and l.LEVEL_ID =?3"
+	@Query(value = "select * from response r inner join question q on r.QUESTION_ID= q.QUESTION_ID and r.QUESTION_ID=?1 inner join test t on q.TEST_ID = t.TEST_ID and q.TEST_ID=?2 inner join level l on t.LEVEL_ID = l.LEVEL_ID and t.LEVEL_ID=?3 inner join subject sb on l.SUBJECT_ID = sb.SUBJECT_ID and l.SUBJECT_ID=?4 inner join stream st on sb.STREAM_ID = st.STREAM_ID and sb.STREAM_ID=?5WHERE r.RESPONSE_ID=?6"
 			, nativeQuery = true)
-	ResponseEntity findResponse(Long STEAM_ID, Long SUBJECT0_ID, Long LEVEL_ID, Long TEST_ID,Long QUESTION_ID,Long RESPONSE_ID);
+	ResponseEntity findResponse(Long QUESTION_ID,Long TEST_ID,Long LEVEL_ID,Long SUBJECT0_ID,Long STEAM_ID,Long RESPONSE_ID);
 	
-	@Query(value = "SELECT * FROM level l inner join subject sb on l.SUBJECT_ID = sb.SUBJECT_ID inner join stream st on sb.STREAM_ID = st.STREAM_ID and sb.STREAM_ID=?1 WHERE l.SUBJECT_ID =?2"
+	@Query(value = "select * from response r inner join question q on r.QUESTION_ID= q.QUESTION_ID and r.QUESTION_ID=?1 inner join test t on q.TEST_ID = t.TEST_ID and q.TEST_ID=?2 inner join level l on t.LEVEL_ID = l.LEVEL_ID and t.LEVEL_ID=?3 inner join subject sb on l.SUBJECT_ID = sb.SUBJECT_ID and l.SUBJECT_ID=?4 inner join stream st on sb.STREAM_ID = st.STREAM_ID and sb.STREAM_ID=?5 "
 			, nativeQuery = true)
-	List<ResponseEntity> findAllResponse(Long STEAM_ID, Long SUBJECT0_ID,Long LEVEL_ID,Long TEST_ID,Long QUESTION_ID);
+	List<ResponseEntity> findAllResponse(Long QUESTION_ID,Long TEST_ID,Long LEVEL_ID,Long SUBJECT0_ID,Long STEAM_ID);
 	
 }

@@ -28,7 +28,7 @@ public class ResponseEntity  extends AbstractEntity{
 		private String statement;
 		
 		@Column(name = "VERIFY", nullable = false)
-		private boolean Verify;
+		private String Verify;
 		
 	
 
@@ -49,12 +49,12 @@ public class ResponseEntity  extends AbstractEntity{
 		
 		
 
-		public boolean isVerify() {
+		public String getVerify() {
 			return Verify;
 		}
 
-		public void setVerify(boolean verify) {
-			Verify = verify;
+		public void setVerify(String Verify) {
+			this.Verify = Verify;
 		}
 
 		public Long getId() {

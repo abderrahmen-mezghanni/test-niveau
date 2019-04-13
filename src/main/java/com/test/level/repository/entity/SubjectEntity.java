@@ -30,6 +30,14 @@ public class SubjectEntity extends AbstractEntity {
 	@JoinColumn(name = "STREAM_ID", nullable = false)
 	private StreamEntity stream;
 	
+	public List<LevelEntity> getLevels() {
+		return levels;
+	}
+
+	public void setLevels(List<LevelEntity> levels) {
+		this.levels = levels;
+	}
+
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<LevelEntity> levels;
 	

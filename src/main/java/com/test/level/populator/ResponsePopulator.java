@@ -18,8 +18,8 @@ public class ResponsePopulator extends AbstractPopulator<ResponseEntity,Response
 				Response response = new Response();
 				response.setId(entity.getId());
 				response.setStatement(entity.getStatement());
-				response.setVerify(entity.isVerify());
-
+				if (entity.getVerify()=="true")
+			{response.setVerify(true);}
 				return response;
 			}
 
@@ -28,7 +28,10 @@ public class ResponsePopulator extends AbstractPopulator<ResponseEntity,Response
 				ResponseEntity responseEntity = new ResponseEntity();
 				responseEntity.setId(model.getId());
 				responseEntity.setStatement(model.getStatement());
-				responseEntity.setVerify(model.isVerify());
+				if (model.isVerify())
+					{responseEntity.setVerify("true");}
+				else
+					{responseEntity.setVerify("false");}
 //				responseEntity.setQuestion(questionPopulator.populateFrommodelList(model.getQuestion()));
 				return responseEntity;
 			}
@@ -37,7 +40,10 @@ public class ResponsePopulator extends AbstractPopulator<ResponseEntity,Response
 			public ResponseEntity updateToEntity(Response model, ResponseEntity entity) {
 				entity.setId(model.getId());
 				entity.setStatement(model.getStatement());
-				entity.setVerify(model.isVerify());
+				if (model.isVerify())
+					{entity.setVerify("true");}
+				else
+					{entity.setVerify("false");}
 //				entity.setQuestion(questionPopulator.populateFrommodelList(model.getQuestion()));
 				return entity;
 			}

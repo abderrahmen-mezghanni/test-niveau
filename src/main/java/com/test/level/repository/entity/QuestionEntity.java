@@ -29,10 +29,10 @@ public class QuestionEntity  extends AbstractEntity{
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "TEST_ID", nullable = false)
-	private TestEntity Test;
+	private TestEntity test;
 	
-//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-//	private List<ResponseEntity> Response;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ResponseEntity> Response;
 
 	public QuestionEntity() {
 		super();
@@ -42,7 +42,7 @@ public class QuestionEntity  extends AbstractEntity{
 		super();
 		this.id = id;
 		this.statement = statement;
-		Test = test;
+		test = test;
 	}
 
 	public Long getId() {
@@ -62,20 +62,22 @@ public class QuestionEntity  extends AbstractEntity{
 	}
 
 	public TestEntity getTest() {
-		return Test;
+		return test;
 	}
 
 	public void setTest(TestEntity test) {
-		Test = test;
+		this.test = test;
 	}
 
-//	public List<ResponseEntity> getResponse() {
-//		return Response;
-//	}
-//
-//	public void setResponse(List<ResponseEntity> response) {
-//		Response = response;
-//	}
+	public List<ResponseEntity> getResponse() {
+		return Response;
+	}
+
+	public void setResponse(List<ResponseEntity> response) {
+		Response = response;
+	}
+
+
 
 
 }

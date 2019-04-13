@@ -27,11 +27,19 @@ public class TestEntity extends AbstractEntity {
 	@JoinColumn(name = "LEVEL_ID", nullable = false)
 	private LevelEntity level;
 
-//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
-//	private List<QuestionEntity> Questions;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<QuestionEntity> Questions;
 
 	public TestEntity() {
 		super();
+	}
+
+	public List<QuestionEntity> getQuestions() {
+		return Questions;
+	}
+
+	public void setQuestions(List<QuestionEntity> questions) {
+		Questions = questions;
 	}
 
 	public TestEntity(Long id, LevelEntity level) {

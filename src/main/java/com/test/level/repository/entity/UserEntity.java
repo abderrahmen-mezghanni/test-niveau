@@ -3,24 +3,35 @@ package com.test.level.repository.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-@Entity
+@Entity(name="user")
 @Table(name = "user")
 public class UserEntity extends AbstractEntity{
 	
 	@Id
+	@Column(name = "CIN", unique = true, nullable = false)
 	private Long cin;
+	
+	@Column(name = "NOM", unique = true, nullable = false)
 	private String nom;
+
+	@Column(name = "PRENOM", unique = true, nullable = false)
 	private String prenom;
+
+	@Column(name = "PASSWORD", unique = true, nullable = false)
 	private String password;
+	
 	@ManyToMany
 	@JoinTable(name="user_role")
-	private List<RoleEntity> roles;
+	private List<RoleEntity> role;
 	
 
 	public UserEntity() {
@@ -80,15 +91,19 @@ public class UserEntity extends AbstractEntity{
 
 
 
-	public List<RoleEntity> getRoles() {
-		return roles;
+	public List<RoleEntity> getRole() {
+		return role;
 	}
 
 
 
-	public void setRoles(List<RoleEntity> roles) {
-		this.roles = roles;
+	public void setRole(List<RoleEntity> role) {
+		this.role = role;
 	}
+
+
+
+	
 
 
 

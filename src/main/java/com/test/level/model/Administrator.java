@@ -17,7 +17,7 @@ public class Administrator extends User{
 		List<Role> roles= new ArrayList<Role>();
 		roles.add(new Role("ADMIN","ADMIN"));
 		roles.add(new Role("PROF","PROF"));
-		this.setRoles(roles);
+		this.setRole(roles);
 	}
 
 }

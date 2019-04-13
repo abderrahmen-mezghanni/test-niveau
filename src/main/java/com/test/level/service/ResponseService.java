@@ -35,15 +35,15 @@ public class ResponseService {
 	public List<Response> getAllResponses() {
 		return responsePopulator.populateList(responseRepository.findAll());
 	}
-	public Response findResponse(Long id,Long questionId,Long testId,Long levelId,Long subjectId,Long streamId) {
-		Response response =responsePopulator.toModel(responseRepository.findResponse( streamId, subjectId,levelId,testId,questionId,id));
+	public Response findResponse(Long questionId,Long testId,Long levelId,Long subjectId,Long streamId,Long id) {
+		Response response =responsePopulator.toModel(responseRepository.findResponse(questionId,testId,levelId,subjectId,streamId,id));
 		return response;
 	
 	}
 	
 	
-	public List<Response> findAllResponses(Long questionId,Long testId,Long LevelId,Long subjectId,Long streamId) {
-		List <Response> responses = responsePopulator.populateList(responseRepository.findAllResponse(streamId, subjectId,LevelId,testId,questionId ));
+	public List<Response> findAllResponses(Long questionId,Long testId,Long levelId,Long subjectId,Long streamId) {
+		List <Response> responses = responsePopulator.populateList(responseRepository.findAllResponse(questionId,testId,levelId,subjectId,streamId));
 		for (int i=0; i<responses.size();i++) {
 			Response response=responses.get(i);
 			responses.set(i,response);

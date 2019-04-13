@@ -15,6 +15,6 @@ public class ProfessorEntity extends UserEntity{
 		super( cin, nom, prenom,password);
 		List<RoleEntity> roles= new ArrayList<RoleEntity>();
 		roles.add(new RoleEntity("PROF","PROF"));
-		this.setRoles(roles);
+		this.setRole(roles);
 	}
 }

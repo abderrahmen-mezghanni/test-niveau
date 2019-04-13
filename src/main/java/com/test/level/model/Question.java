@@ -6,18 +6,19 @@ public class Question extends AbstractModel {
 	private Long id;
 	private String statement;
 	private Test test;
-	private List <Response> Response ;
+	private List <Response> responses ;
 
 	public Question() {
 		super();
 
 	}
 
-	public Question(Long id, String statement, Test test) {
+	public Question(Long id, String statement, Test test,List<Response> responses) {
 		super();
 		this.id = id;
 		this.statement = statement;
 		this.test = test;
+		this.responses=responses;
 	}
 
 	public Long getId() {
@@ -45,11 +46,11 @@ public class Question extends AbstractModel {
 	}
 
 	public List<Response> getResponse() {
-		return Response;
+		return responses;
 	}
 
-	public void setResponse(List<Response> response) {
-		Response = response;
+	public void setResponse(List<Response> responses) {
+		this.responses = responses;
 	}
 
 	
